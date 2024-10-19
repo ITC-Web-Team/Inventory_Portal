@@ -7,10 +7,13 @@ const app = express();
 
 connection();
 
+// Middleware to parse JSON
 app.use(express.json());
 app.use(Router);
 
 const PORT = 8000;
+
+
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);

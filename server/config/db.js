@@ -10,6 +10,10 @@ const connection = async()=>{
     try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
+
+        // This will create/update tables based on your models
+        await sequelize.sync({ force: true }); // Be careful with force:true in production!
+        console.log('Database synchronized');
       } catch (error) {
         console.error('Unable to connect to the database:', error);
       }

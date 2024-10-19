@@ -1,12 +1,11 @@
 import Item from '../models/item.js';
 import Students from '../models/student.js';
 import Orders from '../models/order.js';
-import {connection} from '../config/db.js';
 
-//get all items
-const getAllItems = async (req,res) => {
+// Get all items
+const getAllItems = async (req, res) => {
     try {
-        const items = await Item.findAll();
+        const items = await Item.findAll;
         res.json(items);
     } catch (error) {
         console.error(error.message);
@@ -45,16 +44,32 @@ const getItem = async (req,res) => {
     }
 };
 
-//create item
-const createItem = async (req,res) => {
+
+const createItem = async (req, res) => {
+    const { name, description, quantityTotal, quantityAvailable } = req.body;
+
+    if (!name || !description || quantityTotal == null || quantityAvailable == null) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+
     try {
-        const item = await Item.create(req.body);
-        res.json(item);
+        const item = await Item.create({
+            name,
+            description,
+            quantityTotal,
+            quantityAvailable,
+        });
+
+        res.status(201).json({
+            message: 'Item created successfully',
+            item,
+        });
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Server Error');
+        res.status(500).json({ message: 'Server Error' });
     }
 };
+
 
 // Controller function to delete a item by ID
 const deleteItem = async (req, res) => {

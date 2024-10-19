@@ -1,7 +1,5 @@
-export default function StHome() {
-    return(
-        <div className="flex h-screen w-screen text-9xl">
-            <h1 className="text-center">Home page</h1>
-        </div>
-    )
+//server side component
+
+export default async function StHome(){
+    const { data } = await axios.get('http')
 }

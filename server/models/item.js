@@ -1,22 +1,37 @@
-'use strict';
-import { Model } from 'sequelize';
+// models/item.js
+import { Model, DataTypes } from 'sequelize';
+import {sequelize} from '../config/db.js';
 
-export default (sequelize, DataTypes) => {
-  class Item extends Model {
-    static associate(models) {
-      // define associations here
+class Item extends Model {}
+
+Item.init({
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    description: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    quantityTotal: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    quantityAvailable: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
-  }
-
-  Item.init({
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    quantityTotal: DataTypes.STRING,
-    quantityAvailable: DataTypes.STRING
-  }, {
+}, {
     sequelize,
     modelName: 'Item',
-  });
+    tableName: 'Items',
+    timestamps: true
+});
 
-  return Item;
-};
+export default Item;
